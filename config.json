@@ -1,0 +1,6 @@
+{
+  "rpc_url": "http://127.0.0.1:18443",
+  "rpc_user": "polaruser",
+  "rpc_password": "polarpass",
+  "wallet": "testwallet"
+}
