@@ -13,19 +13,19 @@ use serde_json::Value;
 #[command(name = "rust-for-bitcoin", version, about)]
 pub struct Cli {
     /// Bitcoin Core RPC URL, e.g. http://127.0.0.1:18443
-    #[arg(long, env = "RFB_RPC_URL", global = true)]
+    #[arg(long, env = "RPC_URL", global = true)]
     pub rpc_url: Option<String>,
 
     /// RPC username
-    #[arg(long, env = "RFB_RPC_USER", global = true)]
+    #[arg(long, env = "RPC_USER", global = true)]
     pub rpc_user: Option<String>,
 
     /// RPC password
-    #[arg(long, env = "RFB_RPC_PASSWORD", global = true)]
+    #[arg(long, env = "RPC_PASSWORD", global = true)]
     pub rpc_password: Option<String>,
 
     /// Wallet name to operate on (required for wallet scoped commands)
-    #[arg(long, env = "RFB_WALLET", global = true)]
+    #[arg(long, env = "WALLET", global = true)]
     pub wallet: Option<String>,
 
     /// Optional path to a JSON config file which contain rpc_url/rpc_password/wallet
