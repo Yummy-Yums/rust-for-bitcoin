@@ -255,8 +255,8 @@ test@pop-os:~/Desktop/rust/rust-for-bitcoin$ ./target/debug/rust-for-bitcoin --c
      ```
    - Unload the wallet and run the `listwallets` command again see if the empty string is unloaded
      ```bash 
-      bitcoin-cli unloadwallet
+      bitcoin@backend1:/$ bitcoin-cli unloadwallet ""
    
-      bitcoin-cli listwallets
-     ["testwallets"]
+      bitcoin@backend1:/$ bitcoin-cli listwallets
+       ["testwallets"]
       ```
