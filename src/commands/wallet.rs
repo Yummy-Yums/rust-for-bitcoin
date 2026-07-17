@@ -1,18 +1,18 @@
 /*
-    wallet-info
+   wallet-info
 
-    Display:
+   Display:
 
-        Wallet name
-        Balance
-        Unconfirmed balance
-        Number of transactions
+       Wallet name
+       Balance
+       Unconfirmed balance
+       Number of transactions
 
- */
-use serde::Deserialize;
-use serde_json::{json, Map, Value};
+*/
 use crate::error::AppErrors;
 use crate::rpc::{RpcClient, RpcResponse};
+use serde::Deserialize;
+use serde_json::{Map, Value, json};
 
 #[derive(Debug, Deserialize)]
 pub struct WalletInfo {
@@ -38,7 +38,7 @@ pub struct WalletInfo {
     birthtime: i64,
     flags: Vec<String>,
     #[serde(rename = "lastprocessedblock")]
-    last_processed_block: Map<String, Value>
+    last_processed_block: Map<String, Value>,
 }
 
 fn require_wallet(wallet: &Option<String>) -> Result<&str, AppErrors> {
@@ -60,7 +60,7 @@ pub fn wallet_info(client: &RpcClient) -> Result<(), AppErrors> {
 pub struct GetBalancesResponse {
     pub mine: Mine,
     #[serde(rename = "lastprocessedblock")]
-    pub last_processed_block: Option<Value>
+    pub last_processed_block: Option<Value>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -74,8 +74,10 @@ pub fn balance(client: &RpcClient) -> Result<(), AppErrors> {
     let raw = client.call("getbalances", vec![])?;
     let balance: GetBalancesResponse = serde_json::from_value(raw)?;
     println!("balance: {:?} BTC", balance.mine.trusted);
-    println!("unconfirmed balance: {:?} BTC", balance.mine.untrusted_pending);
+    println!(
+        "unconfirmed balance: {:?} BTC",
+        balance.mine.untrusted_pending
+    );
 
     Ok(())
 }
-

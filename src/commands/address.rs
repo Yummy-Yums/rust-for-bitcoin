@@ -1,11 +1,11 @@
 /*
-    new-address
+   new-address
 
-    Generate and print a new receiving address.
- */
-use serde_json::Value;
+   Generate and print a new receiving address.
+*/
 use crate::error::AppErrors;
 use crate::rpc::{RpcClient, RpcResponse};
+use serde_json::Value;
 
 pub fn generate_new_address(client: &RpcClient) -> Result<(), AppErrors> {
     let raw = client.call("getnewaddress", vec![])?;

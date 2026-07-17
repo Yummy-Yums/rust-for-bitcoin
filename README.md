@@ -235,19 +235,19 @@ test@pop-os:~/Desktop/rust/rust-for-bitcoin$ ./target/debug/rust-for-bitcoin --c
 2. No Wallet is loaded. If this error is encountered, but you have created the wallet 
 ![No Wallet is loaded](images/no%20wallet%20is%20loaded.png)
 
- - Run bitcoin-cli listwallets from the node terminal to see what's actually loaded. the default wallet is an empty string "" which is first loaded and cause the above issue
-
-   ```bash
-   bitcoin@backend1:/$ bitcoin-cli listwallets                         
-    [
-    "",
-    "testwallet"
-    ]
-   ```
- - Unload the wallet and run the `listwallets` command again see if the empty string is unloaded
-   ```bash 
-    bitcoin-cli unloadwallet
+   - Run bitcoin-cli listwallets from the node terminal to see what's actually loaded. the default wallet is an empty string `""` 
+     which is first loaded and cause the above issue
+     ```bash
+     bitcoin@backend1:/$ bitcoin-cli listwallets                         
+      [
+      "",
+      "testwallet"
+      ]
+     ```
+   - Unload the wallet and run the `listwallets` command again see if the empty string is unloaded
+     ```bash 
+      bitcoin-cli unloadwallet
    
-    bitcoin-cli listwallets
-   ["testwallets"]
-```
+      bitcoin-cli listwallets
+     ["testwallets"]
+      ```

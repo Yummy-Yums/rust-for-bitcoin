@@ -1,22 +1,22 @@
-use std::path::PathBuf;
-use anyhow::Context;
-use serde::Deserialize;
-use anyhow::Result;
 use crate::cli::Cli;
+use anyhow::Context;
+use anyhow::Result;
+use serde::Deserialize;
+use std::path::PathBuf;
 
 /*
-    Resolved RPC connection settings. Precedence (highest wins)
-    CLI flags > environment variables > config file > error.
+   Resolved RPC connection settings. Precedence (highest wins)
+   CLI flags > environment variables > config file > error.
 
-    None  is ever hardcoded - if none of the three sources supply a
-    required value, `Config::load` returns an error
- */
+   None  is ever hardcoded - if none of the three sources supply a
+   required value, `Config::load` returns an error
+*/
 #[derive(Debug, Clone)]
 pub struct Config {
     pub rpc_url: String,
     pub user: String,
     pub password: String,
-    pub wallet: Option<String>
+    pub wallet: Option<String>,
 }
 
 /*
@@ -34,7 +34,7 @@ struct FileConfig {
     rpc_url: Option<String>,
     rpc_user: Option<String>,
     rpc_password: Option<String>,
-    wallet: Option<String>
+    wallet: Option<String>,
 }
 
 impl Default for FileConfig {
@@ -52,7 +52,7 @@ impl Config {
     pub fn load(cli: &Cli) -> Result<Self> {
         let file_config: FileConfig = match &cli.config {
             Some(path) => load_file(path)?,
-            None => FileConfig::default()
+            None => FileConfig::default(),
         };
 
         let rpc_url = cli
@@ -61,11 +61,9 @@ impl Config {
             .or(file_config.rpc_url)
             .context("Missing RPC URL. Set --rpc-url, RFB_RPC_URL, or add it to --config.")?;
 
-        let rpc_user = cli
-            .rpc_user
-            .clone()
-            .or(file_config.rpc_user)
-            .context("Missing RPC USERNAME. Set --rpc-username, RFB_RPC_URL, or add it to --config.")?;
+        let rpc_user = cli.rpc_user.clone().or(file_config.rpc_user).context(
+            "Missing RPC USERNAME. Set --rpc-username, RFB_RPC_URL, or add it to --config.",
+        )?;
 
         let rpc_password = cli
             .rpc_password
@@ -82,7 +80,6 @@ impl Config {
             wallet: wallet,
         })
     }
-
 }
 
 fn load_file(path: &PathBuf) -> Result<FileConfig> {

@@ -10,10 +10,10 @@
         Verification progress
 
 */
-use reqwest::Client;
-use serde::Deserialize;
 use crate::error::AppErrors;
 use crate::rpc::RpcClient;
+use reqwest::Client;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct BlockchainInfo {

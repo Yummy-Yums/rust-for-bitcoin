@@ -32,23 +32,17 @@ pub enum AppErrors {
     },
 
     #[error("Invalid parameters for method '{method}': {message} ")]
-    InvalidParams { method : String, message: String },
+    InvalidParams { method: String, message: String },
 
-    #[error(
-        "The wallet is missing or you passed the wrong name, please crosscheck and try again"
-    )]
+    #[error("The wallet is missing or you passed the wrong name, please crosscheck and try again")]
     MissingWallet,
 
     #[error("Failed to parse node's response as JSON: {0}")]
-    Json(
-        #[from]
-        serde_json::Error
-    ),
+    Json(#[from] serde_json::Error),
 
     #[error("Failed to parse node's response as JSON: {0}")]
     UnexpectedResponse(String),
 
     #[error("{0}")]
-    Other(String)
+    Other(String),
 }
-

@@ -1,9 +1,8 @@
-use reqwest::blocking::Client;
-use serde_json::{json, Value};
-use serde::{ Deserialize};
 use crate::config::Config;
 use crate::error::AppErrors;
-
+use reqwest::blocking::Client;
+use serde::Deserialize;
+use serde_json::{Value, json};
 
 /* Example of Valid Request
 test@pop-os:~/Desktop/rust/rust-for-bitcoin$ curl --user polaruser:polarpass  \n
@@ -15,7 +14,7 @@ test@pop-os:~/Desktop/rust/rust-for-bitcoin$ curl --user polaruser:polarpass  \n
 #[derive(Debug, Deserialize)]
 pub struct RpcResponse {
     pub result: Option<Value>,
-    pub error: Option<RpcErrorBody>
+    pub error: Option<RpcErrorBody>,
 }
 
 /* Example of Invalid Request
@@ -28,7 +27,7 @@ test@pop-os:~/Desktop/rust/rust-for-bitcoin$ curl --user polaruser:polarpass  \n
 #[derive(Debug, Deserialize)]
 pub struct RpcErrorBody {
     pub code: i64,
-    pub message: String
+    pub message: String,
 }
 
 /// A thin, reusable JSON-RPC client for Bitcoin Core.
@@ -39,7 +38,7 @@ pub struct RpcClient {
     http_client: Client,
     url: String,
     username: String,
-    password: String
+    password: String,
 }
 
 impl RpcClient {
@@ -48,25 +47,16 @@ impl RpcClient {
             http_client: Client::new(),
             url: config.rpc_url.clone(),
             username: config.user.clone(),
-            password: config.password.clone()
+            password: config.password.clone(),
         }
     }
 
     // Call a non-wallet RPC method (e.g. getblockchaininfo).
-    pub fn call(
-        &self,
-        method: &str,
-        params: Vec<Value>,
-    ) -> Result<Value, AppErrors> {
+    pub fn call(&self, method: &str, params: Vec<Value>) -> Result<Value, AppErrors> {
         self.call_at(&self.url, method, params)
     }
 
-    fn call_at(
-        &self,
-        url: &str,
-        method: &str,
-        params: Vec<Value>,
-    ) -> Result<Value, AppErrors> {
+    fn call_at(&self, url: &str, method: &str, params: Vec<Value>) -> Result<Value, AppErrors> {
         let body = json!({
             "jsonrpc": "1.0",
             "id": "curltest",
@@ -82,7 +72,7 @@ impl RpcClient {
             .send()
             .map_err(|source| AppErrors::Connection {
                 url: url.to_string(),
-                source
+                source,
             })?;
 
         let status_code = response.status();
@@ -91,17 +81,15 @@ impl RpcClient {
             return Err(AppErrors::InvalidCredentials);
         }
 
-        let text = response
-            .text()
-            .map_err(|source| AppErrors::Connection {
-                url: url.to_string(),
-                source
-            })?;
+        let text = response.text().map_err(|source| AppErrors::Connection {
+            url: url.to_string(),
+            source,
+        })?;
 
         let parsed = serde_json::from_str::<RpcResponse>(&text)?;
 
         if let Some(error) = parsed.error {
-            return Err(classify_error(method, error))
+            return Err(classify_error(method, error));
         }
 
         parsed
@@ -110,11 +98,10 @@ impl RpcClient {
     }
 }
 
-
 /*
-    Map Bitcoin Core's generic RPC error codes onto our richer types
-    where it's obviously useful and fall back to a generic RpcError Otherwise
- */
+   Map Bitcoin Core's generic RPC error codes onto our richer types
+   where it's obviously useful and fall back to a generic RpcError Otherwise
+*/
 fn classify_error(method: &str, error: RpcErrorBody) -> AppErrors {
     const RPC_WALLET_NOT_FOUND: i64 = -18;
     const RPC_WALLET_NOT_SPECIFIED: i64 = -19;
@@ -137,6 +124,6 @@ fn classify_error(method: &str, error: RpcErrorBody) -> AppErrors {
             method: method.to_string(),
             code: error.code,
             message: error.message,
-        }
+        },
     }
 }

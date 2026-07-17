@@ -1,7 +1,6 @@
-use std::path::PathBuf;
 use clap::{Command, Parser, Subcommand};
 use serde_json::Value;
-
+use std::path::PathBuf;
 
 /// A CLI program for talking to a Bitcoin Core node over JSON-RPC.
 ///
@@ -33,7 +32,7 @@ pub struct Cli {
     pub config: Option<PathBuf>,
 
     #[command(subcommand)]
-    pub command: Commands
+    pub command: Commands,
 }
 
 #[derive(Subcommand)]
@@ -52,12 +51,10 @@ pub enum Commands {
 
     /// Call an arbitrary Bitcoin Core RPC method
     Rpc {
-
         /// Rpc method name, e.g. getblockcount
         method: String,
 
         /// Positional arguments passed through
         params: Vec<Value>,
-
-    }
+    },
 }
