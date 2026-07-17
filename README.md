@@ -38,14 +38,19 @@ The compiled binary will be at `target/release/rust-for-bitcoin`. You can also r
 
 ## Setting Up Polar
 
-Polar is a one-click Bitcoin Lightning networks for local app development & testing. This project was developed and tested against a [Polar](https://lightningpolar.com/) regtest network. Note that, these install instructions are for linux POP-OS . Please check the Issues section for common blockers when setting up Polars & Docker.
+Polar is a one-click Bitcoin Lightning networks for local app development & testing. This project was developed and tested against a [Polar](https://lightningpolar.com/) regtest network. Note that, these install instructions are for linux POP-OS. 
+Please check the Issues section for common blockers when setting up Polars & Docker.
 
 1. Download  [Polar](https://lightningpolar.com/) test environment. For Linux, you'd receive `polar-linux-x86_64-v4.0.0.AppImage` which is an `AppImage application bundle (application/vnd.appimage)`. Open the folder in your terminal (`Downloads` in this case) and make it executable with
    `test@pop-os:~/Desktop/RustRover-2024.3.6$ chmod +x polar-linux-x86_64-v4.0.0.AppImage.
+
 2.  Make sure `Docker/Docker Desktop` is installed and running.
+
 3.  If successful with the previous steps, you'd see a welcome page.
    ![Polar Welcome Page](images/welcome_page.png)
+
 4. Enter the name of the network and click **Start**.  First start will take longer since it pulls the `polarlightning/bitcoind` Docker image.
+
 5. Once the node's status shows **Started**, open its **Connect** tab to get the RPC host, port, username, and password.
    ![Node Ready](images/node%20ready.png)
 
