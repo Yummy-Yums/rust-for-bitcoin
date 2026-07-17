@@ -229,10 +229,14 @@ test@pop-os:~/Desktop/rust/rust-for-bitcoin$ ./target/debug/rust-for-bitcoin --c
 
 ## Issues
 1. Docker Socket not found. If this error is encountered, but you have the Docker/Docker Desktop running, create a symlink by:
- ```bash sudo ln -s /home/test/.docker/desktop/docker.sock /var/run/docker.sock```
+
+    ```bash 
+      sudo ln -s /home/test/.docker/desktop/docker.sock /var/run/docker.sock
+    ```
 ![Docker not detected](images/docker%20not%20detected%20issue.png)
 
-2. No Wallet is loaded. If this error is encountered, but you have created the wallet 
+2. No Wallet is loaded. If this error is encountered, but you have created the wallet
+
 ![No Wallet is loaded](images/no%20wallet%20is%20loaded.png)
 
    - Run bitcoin-cli listwallets from the node terminal to see what's actually loaded. the default wallet is an empty string `""` 
