@@ -250,5 +250,4 @@ test@pop-os:~/Desktop/rust/rust-for-bitcoin$ ./target/debug/rust-for-bitcoin --c
    
     bitcoin-cli listwallets
    ["testwallets"]
- - ```
- - 
+```
